@@ -9,6 +9,7 @@ const categoryRoutes = require("./routes/categoryRoutes");
 const productRoutes = require("./routes/productRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const adminRoutes = require("./routes/admin/adminRoutes")
 const path = require("path");
 
 const app = express();
@@ -27,6 +28,7 @@ app.use("/api/", categoryRoutes);
 app.use("/api/", productRoutes);
 app.use("/api/", cartRoutes);
 app.use("/api/", orderRoutes);
+app.use("/api/admin/", adminRoutes);
 
 connectDB()
   .then(() => {
