@@ -11,11 +11,17 @@ const cartRoutes = require("./routes/cartRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const adminRoutes = require("./routes/admin/adminRoutes")
 const path = require("path");
+const helmet = require('helmet');
+const rateLimiter = require('./utils/rateLimiter');
+const errorHandler = require('./utils/errorHandler');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use("/uploads", express.static(path.join(__dirname, '..', "uploads")));
+
+app.use(helmet());
+app.use(rateLimiter);
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -29,6 +35,8 @@ app.use("/api/", productRoutes);
 app.use("/api/", cartRoutes);
 app.use("/api/", orderRoutes);
 app.use("/api/admin/", adminRoutes);
+
+app.use(errorHandler);
 
 connectDB()
   .then(() => {
